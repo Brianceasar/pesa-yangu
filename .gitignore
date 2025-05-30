@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Environment variables
+.env
+.env.example
+config/env/
+
+# Temporary files
+.cache/
+.tmp/
+
+# Database files
+database/
+*.sqlite
+*.db
+
+# Data dumps or runtime data
+data/
+
+# Logs
+*.log
+logs/
+
+# Lock file
+package-lock.json
+
+# Editor and OS files
+.DS_Store
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Strapi-specific generated files
+.strapi/
+
+# Local development uploads
+public/uploads/*
+!public/uploads/.gitkeep

@@ -65,6 +65,51 @@
       "target": "plugin::users-permissions.role",
       "inversedBy": "users",
       "configurable": false
+    },
+    "full_name": {
+      "type": "text"
+    },
+    "role_type": {
+      "type": "enumeration",
+      "enum": [
+        "customer",
+        "mentor",
+        "app-admin"
+      ]
+    },
+    "phone_number": {
+      "type": "text"
+    },
+    "profile_picture": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "bio": {
+      "type": "text"
+    },
+    "mentorship_sessions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::mentorship-session.mentorship-session",
+      "mappedBy": "customer"
+    },
+    "learning_resources": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::learning-resource.learning-resource",
+      "mappedBy": "uploaded_by"
+    },
+    "ratings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::rating.rating",
+      "mappedBy": "rated_by"
     }
   }
 }

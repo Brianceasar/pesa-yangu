@@ -20,7 +20,8 @@
       "enum": [
         "video",
         "article",
-        "pdf"
+        "pdf",
+        "link"
       ]
     },
     "file": {
@@ -36,6 +37,12 @@
     "description": {
       "type": "text",
       "required": true
+    },
+    "uploaded_by": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "learning_resources"
     }
   }
 }

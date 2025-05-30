@@ -1,6 +1,6 @@
 # 🚀 Getting started with Strapi
 
-This Server project was scaffolded by Strapi CMS (https://strapi.io/)
+This Server project was scaffolded by [Strapi CMS](https://strapi.io/)
 
 ### `develop`
 

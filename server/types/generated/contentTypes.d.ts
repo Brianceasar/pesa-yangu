@@ -436,6 +436,10 @@ export interface ApiMentorshipSessionMentorshipSession
       'api::mentorship-session.mentorship-session'
     > &
       Schema.Attribute.Private;
+    mentor: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     preferred_date: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
     rating: Schema.Attribute.Relation<'oneToOne', 'api::rating.rating'>;
@@ -966,6 +970,10 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
+    mentoring_sessions: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::mentorship-session.mentorship-session'
+    >;
     mentorship_sessions: Schema.Attribute.Relation<
       'oneToMany',
       'api::mentorship-session.mentorship-session'

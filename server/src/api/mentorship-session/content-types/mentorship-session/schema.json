@@ -45,6 +45,12 @@
       "relation": "oneToOne",
       "target": "api::rating.rating",
       "mappedBy": "session"
+    },
+    "mentor": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "mentoring_sessions"
     }
   }
 }

@@ -110,6 +110,12 @@
       "relation": "oneToMany",
       "target": "api::rating.rating",
       "mappedBy": "rated_by"
+    },
+    "mentoring_sessions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::mentorship-session.mentorship-session",
+      "mappedBy": "mentor"
     }
   }
 }

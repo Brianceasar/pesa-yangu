@@ -1,71 +1,66 @@
-import {
-    Box,
-    Container,
-    Typography,
-    TextField,
-    Button,
-    Link as Muilink,
-    Grid
-} from "@mui/material";
+"use client";
 import Link from "next/link";
+import { useState } from "react";
 
 const Footer = () => {
+    const [email, setEmail] = useState("");
+
+    const handleSubscribe = (e: React.FormEvent) => {
+        e.preventDefault();
+        setEmail("");
+    };
+
     return (
-        <Box sx={{ bgcolor: "primary.main", color: "white", py: 4 }}>
-            <Container maxWidth="lg">
-                <Grid container spacing={4}>
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Typography variant="h6" gutterBottom>
-                            Pesa Yangu
-                        </Typography>
-                        <Typography variant="body2">
-                            Empowering you financially, one step at a time.
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Typography variant="h6" gutterBottom>
-                            Quick Links
-                        </Typography>
-                        <Muilink component={Link} href="/" color="inherit">
-                            Home
-                        </Muilink>
-                        <br />
-                        <Muilink component={Link} href="/mentor" color="inherit">
-                            Mentors
-                        </Muilink>
-                        <br />
-                        <Muilink component={Link} href="/resources" color="inherit">
-                            Resources
-                        </Muilink>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Typography variant="h6" gutterBottom>
-                            Contact Us
-                        </Typography>
-                        <TextField
-                            fullWidth
-                            label="Email"
-                            variant="outlined"
-                            size="small"
-                            sx={{ mb: 1 }}
+        <footer className="bg-primary text-white py-8">
+            <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h6 className="text-lg font-bold mb-2">Pesa Yangu</h6>
+                    <p className="text-sm">
+                        Empowering you financially, one step at a time.
+                    </p>
+                </div>
+                <div>
+                    <h6 className="text-lg font-bold mb-2">Quick Links</h6>
+                    <ul className="space-y-1">
+                        <li>
+                            <Link href="/" className="hover:underline">Home</Link>
+                        </li>
+                        <li>
+                            <Link href="/mentor" className="hover:underline">Mentors</Link>
+                        </li>
+                        <li>
+                            <Link href="/resources" className="hover:underline">Resources</Link>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h6 className="text-lg font-bold mb-2">Contact Us</h6>
+                    <form onSubmit={handleSubscribe} className="flex flex-col gap-2">
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            className="rounded px-3 py-2 text-gray-900 focus:outline-none"
+                            required
                         />
-                        <Button variant="contained" color="secondary">
+                        <button
+                            type="submit"
+                            className="bg-secondary hover:bg-secondary-dark text-white rounded px-4 py-2 font-semibold transition"
+                        >
                             Subscribe
-                        </Button>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Typography variant="h6" gutterBottom>
-                            Follow Us
-                        </Typography>
-                        {/* Social media links can be added here */}
-                    </Grid>
-                </Grid>
-            </Container>
-            <Box sx={{ textAlign: "center", mt: 4 }}>
-                <Typography variant="body2">
-                    © {new Date().getFullYear()} Pesa Yangu. All rights reserved.
-                </Typography>
-            </Box>
-        </Box>  
-    )}
+                        </button>
+                    </form>
+                </div>
+                <div>
+                    <h6 className="text-lg font-bold mb-2">Follow Us</h6>
+                </div>
+            </div>
+            <div className="text-center mt-8 text-sm">
+                © {new Date().getFullYear()} Pesa Yangu. All rights reserved.
+            </div>
+        </footer>
+    );
+};
+
 export default Footer;

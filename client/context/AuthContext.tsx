@@ -24,7 +24,7 @@ interface AuthContextType {
 }
 export const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider = ({ children }: AuthProviderProps ) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
@@ -32,21 +32,16 @@ export const AuthProvider = ({ children }: AuthProviderProps ) => {
             .split("; ")
             .find(row => row.startsWith("user="))?.split("=")[1];
 
-            if (storedUser) {
-                setUser(JSON.parse(decodeURIComponent(storedUser)));
-            }
-}, []);
+        if (storedUser) {
+            setUser(JSON.parse(decodeURIComponent(storedUser)));
+        }
+    }, []);
 
-    const login = (userData: User) => {
-    setUser(userData);
-  };
-
-  const logout = () => {
-    setUser(null);
-  };
+    const login = (userData: User) => setUser(userData);
+    const logout = () => setUser(null);
 
     return (
-        <AuthContext.Provider value={{  user, login, logout }}>
+        <AuthContext.Provider value={{ user, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

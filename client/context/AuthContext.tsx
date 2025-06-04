@@ -16,41 +16,34 @@ interface AuthProviderProps {
 }
 interface AuthContextType {
     user: User | null;
-    jwt: string | null;
-    login: (userData: User, token: string) => void;
+    login: (user: User) => void;
     logout: () => void;
 }
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: AuthProviderProps ) => {
     const [user, setUser] = useState<User | null>(null);
-    const [jwt, setJwt] = useState<string | null>(null);
 
     useEffect(() => {
-        const storedJwt = localStorage.getItem("jwt");
-        const storedUser = localStorage.getItem("user");
-        if (storedJwt && storedUser) {
-        setJwt(storedJwt);
-        setUser(JSON.parse(storedUser));
-        }
+        const storedUser = document.cookie
+            .split("; ")
+            .find(row => row.startsWith("user="))?.split("=")[1];
+
+            if (storedUser) {
+                setUser(JSON.parse(decodeURIComponent(storedUser)));
+            }
 }, []);
 
-    const login = (userData: User, token: string) => {
-        localStorage.setItem("jwt", token);
-        localStorage.setItem("user", JSON.stringify(userData));
-        setJwt(token);
-        setUser(userData);
-    };
+    const login = (userData: User) => {
+    setUser(userData);
+  };
 
-    const logout = () => {
-        localStorage.removeItem("jwt");
-        localStorage.removeItem("user");
-        setJwt(null);
-        setUser(null);
-    };
+  const logout = () => {
+    setUser(null);
+  };
 
     return (
-        <AuthContext.Provider value={{  user, jwt, login, logout }}>
+        <AuthContext.Provider value={{  user, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

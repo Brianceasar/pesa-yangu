@@ -1,11 +1,10 @@
 "use client";
-import { Container } from "@mui/material";
 import LoginForm from "@/components/auth/LoginForm";
 
 const LoginPage = () => (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
+    <div className="max-w-md mx-auto mt-10 px-4">
         <LoginForm />
-    </Container>
+    </div>
 );
 
 export default LoginPage;

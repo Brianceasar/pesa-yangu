@@ -10,6 +10,9 @@ type User = {
     id: string;
     username: string;
     email: string;
+    role: {
+        name: "Student" | "Mentor" | "Admin";
+    }
 };
 interface AuthProviderProps {
     children: ReactNode;

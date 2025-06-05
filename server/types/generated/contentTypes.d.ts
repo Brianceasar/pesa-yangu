@@ -428,7 +428,7 @@ export interface ApiMentorshipSessionMentorshipSession
       'manyToOne',
       'plugin::users-permissions.user'
     >;
-    description: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    description: Schema.Attribute.String & Schema.Attribute.Required;
     duration: Schema.Attribute.Integer;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<

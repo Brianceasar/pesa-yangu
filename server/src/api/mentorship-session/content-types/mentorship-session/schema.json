@@ -15,10 +15,6 @@
       "type": "text",
       "required": true
     },
-    "description": {
-      "type": "blocks",
-      "required": true
-    },
     "session_status": {
       "type": "enumeration",
       "enum": [
@@ -51,6 +47,10 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "mentoring_sessions"
+    },
+    "description": {
+      "type": "string",
+      "required": true
     }
   }
 }

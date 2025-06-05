@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 type Props = {
     open: boolean;
@@ -9,10 +11,10 @@ type Props = {
 };
 
 const UpdateProfileModal = ({ open, onClose, userId, jwt }: Props) => {
-    const [form, setForm] = useState({ full_name: "", phone_number: "" });
+    const [form, setForm] = useState({ full_name: "", bio: "", phone_number: "", role: "User" });
     const [loading, setLoading] = useState(false);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
@@ -54,14 +56,35 @@ const UpdateProfileModal = ({ open, onClose, userId, jwt }: Props) => {
                         required
                     />
                     <input
-                        type="text"
-                        name="phone_number"
-                        placeholder="Phone Number"
+                        type="bio"
+                        name="bio"
+                        placeholder="Bio"  
+                        value={form.bio}
+                        onChange={handleChange}
+                        className="p-2 border rounded"
+                    />
+                    <PhoneInput
+                        country={'ke'}
                         value={form.phone_number}
+                        onChange={phone => setForm({ ...form, phone_number: phone })}
+                        inputClass="!w-full !p-2 !border !rounded"
+                        inputProps={{
+                            name: 'phone_number',
+                            required: true,
+                        }}
+                        containerClass="w-full"
+                    />
+                    <select
+                        name="role"
+                        value={form.role}
                         onChange={handleChange}
                         className="p-2 border rounded"
                         required
-                    />
+                        title="Role type"
+                    >
+                        <option value="User">User</option>
+                        <option value="Mentor">Mentor</option>
+                    </select>
                     <button
                         type="submit"
                         disabled={loading}

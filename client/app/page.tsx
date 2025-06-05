@@ -9,17 +9,17 @@ const LandingPage = () => {
   return (
     <div className="font-montserrat bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary via-primary-light to-lightblue text-white py-20">
+      <section className="bg-gradient-to-r from-primary via-primary-light to-lightblue text-black py-20">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold drop-shadow-lg">
             Your Journey to{" "}
             <span className="text-secondary">Financial Freedom</span>
           </h1>
-          <p className="text-lg md:text-2xl mt-6 font-medium text-white/90">
+          <p className="text-lg md:text-2xl mt-6 font-medium text-black/90">
             Mentorship and Resources to Help You Thrive
           </p>
           <button
-            className="mt-10 px-10 py-4 bg-secondary hover:bg-primary-dark text-white rounded-lg text-lg font-semibold shadow-lg transition-all duration-200"
+            className="mt-10 px-10 py-4 bg-secondary hover:bg-primary-dark text-black rounded-lg text-lg font-semibold shadow-lg transition-all duration-200"
             onClick={() => router.push("/register")}
           >
             Get Started

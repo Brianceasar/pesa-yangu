@@ -7,7 +7,7 @@ export const login = async (formData: FormData) => {
     const password = formData.get("password") as string;
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/local`, {
-        method: "POST", 
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
@@ -17,13 +17,24 @@ export const login = async (formData: FormData) => {
     const data = await response.json();
 
     if (response.ok) {
+        const user = data.user;
+        const role = user.role_type; // e.g., "admin", "mentor", "customer"
+
         (await cookies()).set("jwt", data.jwt, { httpOnly: true });
-        (await cookies()).set("user", JSON.stringify(data.user), { httpOnly: true });
-        return { success: true };
+        (await cookies()).set("user", JSON.stringify(user), { httpOnly: true });
+
+        return {
+            success: true,
+            role
+        };
     } else {
-        return { success: false, error: data.message || "Login failed" };
+        return {
+            success: false,
+            error: data.message || "Login failed",
+        };
     }
 };
+
 
 export const register = async (formData: FormData) => {
     const username = formData.get("username") as string;
@@ -43,20 +54,16 @@ export const register = async (formData: FormData) => {
     if (response.ok) {
         (await cookies()).set("jwt", data.jwt, { httpOnly: true });
         (await cookies()).set("user", JSON.stringify(data.user), { httpOnly: true });
-        return { 
+        return {
             success: true,
             jwt: data.jwt,
-            user: data.user
-         };
+            user: data.user,
+            role: data.user.role_type,
+        };
     } else {
-        return { 
-            success: false, 
-            error: data?.message || "Registration failed" };
+        return {
+            success: false,
+            error: data?.message || "Registration failed"
+        };
     }
-};
-
-export const logout = async () => {
-    (await cookies()).delete("jwt");
-    (await cookies()).delete("user");
-    return { success: true };
 };

@@ -22,19 +22,37 @@ const LoginForm = () => {
         setError(null);
         const formData = new FormData(e.currentTarget);
         const result = await login(formData);
-        console.log(result);
 
         if (result.success) {
             setSuccess(true);
             setMessage("Login successful! Redirecting...");
+
+            let targetPath = "/";
+
+            switch (result.role) {
+                case "admin":
+                    targetPath = "/dashboard/admin";
+                    break;
+                case "mentor":
+                    targetPath = "/dashboard/mentor";
+                    break;
+                case "customer":
+                    targetPath = "/dashboard/customer";
+                    break;
+                default:
+                    targetPath = "/";
+            }
+
             setTimeout(() => {
-                router.push("/");
+                router.push(targetPath);
             }, 2000);
+
             setForm({ identifier: "", password: "" });
             setError(null);
         } else {
             setError(result.error);
         }
+
         setLoading(false);
     };
 

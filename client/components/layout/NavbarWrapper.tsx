@@ -6,6 +6,6 @@ import Navbar from "./Navbar";
 
 export default function NavbarWrapper() {
     const auth = useContext(AuthContext);
-    console.log("NavbarWrapper auth:", auth?.user); // Debug user state
+    console.log("NavbarWrapper - current user:", auth?.user);
     return !auth?.user ? <Navbar /> : null;
 }

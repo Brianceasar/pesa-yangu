@@ -2,19 +2,28 @@
 
 import Link from "next/link";
 import { useContext } from "react";
+import { useRouter } from "next/navigation";
 import { AuthContext } from "@/context/AuthContext";
+import toast from "react-hot-toast";
 
-export default function DashboardLayout ({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const auth = useContext(AuthContext);
+    const router = useRouter();
 
     const navItems = [
-        { name: "Home", href: "/"},
+        { name: "Home", href: "/" },
         { name: "Profile", href: "/dashboard/profile" },
         { name: "Mentors", href: "/dashboard/mentors" },
         { name: "Resources", href: "/dashboard/resources" },
         { name: "Settings", href: "/dashboard/settings" }
 
     ];
+
+    const handleLogout = async () => {
+        await fetch("/api/logout", { method: "POST" });
+        toast.success("Logged out successfully!");
+        router.push("/login");
+    };
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">
@@ -36,6 +45,14 @@ export default function DashboardLayout ({ children }: { children: React.ReactNo
                                 </Link>
                             </li>
                         )}
+                        <li>
+                            <button
+                                onClick={handleLogout}
+                                className="text-red-600 hover:text-red-700 px-3 rounded-lg cursor-pointer transition-colors"
+                            >
+                                Logout
+                            </button>
+                        </li>
                     </ul>
                 </div>
             </nav>

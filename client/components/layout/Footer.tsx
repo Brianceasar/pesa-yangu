@@ -38,7 +38,7 @@ const Footer = () => {
                 </div>
                 <div>
                     <h6 className="text-lg font-bold mb-2">Contact Us</h6>
-                    <form onSubmit={handleSubscribe} className="flex flex-col gap-2">
+                    <form onSubmit={handleSubscribe} className="border border-primary flex flex-col gap-2">
                         <input
                             type="email"
                             placeholder="Email"

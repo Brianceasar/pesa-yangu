@@ -1,5 +1,39 @@
 {
-  "node": {},
+  "node": {
+    "7f35688e6f0d244ad9805ac62c12ca109e27526a53": {
+      "workers": {
+        "app/register/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fgilbertmunuo%2FGilbert%2Fapps%2Fpesa%20yangu%2Fclient%2Fapp%2Factions%2Fauth.ts%22%2C%5B%7B%22id%22%3A%227f35688e6f0d244ad9805ac62c12ca109e27526a53%22%2C%22exportedName%22%3A%22logout%22%7D%2C%7B%22id%22%3A%227fb0bd5fc599f71a81a305ea2e97d213dc0e2204cc%22%2C%22exportedName%22%3A%22login%22%7D%2C%7B%22id%22%3A%227fc27eacd14ba19a4897356b458b628bc838d2c788%22%2C%22exportedName%22%3A%22register%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/register/page": "action-browser"
+      }
+    },
+    "7fb0bd5fc599f71a81a305ea2e97d213dc0e2204cc": {
+      "workers": {
+        "app/register/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fgilbertmunuo%2FGilbert%2Fapps%2Fpesa%20yangu%2Fclient%2Fapp%2Factions%2Fauth.ts%22%2C%5B%7B%22id%22%3A%227f35688e6f0d244ad9805ac62c12ca109e27526a53%22%2C%22exportedName%22%3A%22logout%22%7D%2C%7B%22id%22%3A%227fb0bd5fc599f71a81a305ea2e97d213dc0e2204cc%22%2C%22exportedName%22%3A%22login%22%7D%2C%7B%22id%22%3A%227fc27eacd14ba19a4897356b458b628bc838d2c788%22%2C%22exportedName%22%3A%22register%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/register/page": "action-browser"
+      }
+    },
+    "7fc27eacd14ba19a4897356b458b628bc838d2c788": {
+      "workers": {
+        "app/register/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fgilbertmunuo%2FGilbert%2Fapps%2Fpesa%20yangu%2Fclient%2Fapp%2Factions%2Fauth.ts%22%2C%5B%7B%22id%22%3A%227f35688e6f0d244ad9805ac62c12ca109e27526a53%22%2C%22exportedName%22%3A%22logout%22%7D%2C%7B%22id%22%3A%227fb0bd5fc599f71a81a305ea2e97d213dc0e2204cc%22%2C%22exportedName%22%3A%22login%22%7D%2C%7B%22id%22%3A%227fc27eacd14ba19a4897356b458b628bc838d2c788%22%2C%22exportedName%22%3A%22register%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/register/page": "action-browser"
+      }
+    }
+  },
   "edge": {},
   "encryptionKey": "id6MzVFqQg0S0KKKG/i16/kjcBk49p1r30Ch7RonVe4="
 }

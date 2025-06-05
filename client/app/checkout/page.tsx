@@ -81,7 +81,11 @@ const CheckoutPage = () => {
           <p className="text-gray-600 mb-6">{selectedPlan.description}</p>
           <p className="text-xl font-semibold mb-6">{selectedPlan.price}</p>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5 max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg mt-8">
+            {/* Title */}
+            <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">Payment Details</h2>
+
+            {/* Full Name */}
             <input
               name="name"
               value={form.name}
@@ -89,8 +93,10 @@ const CheckoutPage = () => {
               type="text"
               placeholder="Full Name"
               required
-              className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 transition"
             />
+
+            {/* Email */}
             <input
               name="email"
               value={form.email}
@@ -98,36 +104,70 @@ const CheckoutPage = () => {
               type="email"
               placeholder="Email Address"
               required
-              className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 transition"
             />
 
-            <label className="block font-medium text-gray-700">Payment Method</label>
-            <select
-              name="paymentMethod"
-              value={form.paymentMethod}
-              onChange={handleChange}
-              className="w-full border px-4 py-2 rounded bg-white"
-            >
-              <option value="visa">Visa</option>
-              <option value="paypal">PayPal</option>
-              <option value="mobilemoney">Mobile Money</option>
-            </select>
+            {/* Payment Method Selector */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
+              <select
+                name="paymentMethod"
+                value={form.paymentMethod}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+              >
+                <option value="visa">Visa</option>
+                <option value="paypal">PayPal</option>
+                <option value="mobilemoney">Mobile Money</option>
+              </select>
+            </div>
 
-            {/* Dynamic fields */}
+            {/* Conditional Fields */}
             {form.paymentMethod === 'visa' && (
-              <div className="space-y-2">
-                <input type="text" placeholder="Card Number" className="w-full border px-4 py-2 rounded" required />
-                <input type="text" placeholder="MM/YY" className="w-full border px-4 py-2 rounded" required />
-                <input type="text" placeholder="CVV" className="w-full border px-4 py-2 rounded" required />
+              <div className="space-y-3">
+                <input
+                  type="text"
+                  placeholder="Card Number"
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+                />
+                <input
+                  type="text"
+                  placeholder="MM/YY"
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+                />
+                <input
+                  type="text"
+                  placeholder="CVV"
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+                />
               </div>
             )}
+
             {form.paymentMethod === 'paypal' && (
-              <input type="email" placeholder="PayPal Email" className="w-full border px-4 py-2 rounded" required />
+              <input
+                type="email"
+                placeholder="PayPal Email"
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
             )}
+
             {form.paymentMethod === 'mobilemoney' && (
-              <div className="space-y-2">
-                <input type="text" placeholder="Phone Number (07...)" className="w-full border px-4 py-2 rounded" required />
-                <select className="w-full border px-4 py-2 rounded">
+              <div className="space-y-3">
+                <input
+                  type="text"
+                  placeholder="Phone Number (07...)"
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+                />
+                <select
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-400"
+                >
                   <option value="tigo">Tigo Pesa</option>
                   <option value="mpesa">Vodacom M-Pesa</option>
                   <option value="airtel">Airtel Money</option>
@@ -135,13 +175,19 @@ const CheckoutPage = () => {
               </div>
             )}
 
+            {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              disabled={submitted}
+              className={`w-full py-2 text-white font-semibold rounded-md transition focus:outline-none focus:ring-2 focus:ring-green-400 ${submitted
+                ? 'bg-green-300 cursor-not-allowed'
+                : 'bg-green-500 hover:bg-green-600'
+                }`}
             >
-              Complete Payment
+              {submitted ? 'Processing...' : 'Complete Payment'}
             </button>
           </form>
+
         </>
       )}
     </div>

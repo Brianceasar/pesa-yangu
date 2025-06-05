@@ -20,7 +20,7 @@ const LandingPage = () => {
             Mentorship and Resources to Help You Thrive
           </p>
           <button
-            className="mt-10 px-10 py-4 bg-secondary hover:bg-primary-dark text-black rounded-lg text-lg font-semibold shadow-lg transition-all duration-200"
+            className="mt-10 px-10 cursor-pointer py-4 bg-secondary bg-green-500 rounded-lg text-lg font-semibold shadow-lg transition-all duration-200"
             onClick={() => router.push("/register")}
           >
             Get Started

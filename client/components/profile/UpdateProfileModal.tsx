@@ -42,58 +42,82 @@ const UpdateProfileModal = ({ open, onClose, userId, jwt }: Props) => {
 
     if (!open) return null;
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-            <div className="bg-white p-6 rounded shadow-lg max-w-md w-full">
-                <h2 className="text-xl font-bold mb-4">Update Profile</h2>
-                <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="flex flex-col gap-4">
+        <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-50 z-50">
+            <div className="bg-white p-8 rounded-lg shadow-2xl max-w-md w-full relative">
+                <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">Update Profile</h2>
+
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSubmit();
+                    }}
+                    className="flex flex-col gap-5"
+                >
+                    {/* Full Name */}
                     <input
                         type="text"
                         name="full_name"
                         placeholder="Full Name"
                         value={form.full_name}
                         onChange={handleChange}
-                        className="p-2 border rounded"
                         required
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 transition"
                     />
+
+                    {/* Bio */}
                     <input
-                        type="bio"
+                        type="text"
                         name="bio"
-                        placeholder="Bio"  
+                        placeholder="Bio"
                         value={form.bio}
                         onChange={handleChange}
-                        className="p-2 border rounded"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 transition"
                     />
+
+                    {/* Phone Number */}
                     <PhoneInput
                         country={'ke'}
                         value={form.phone_number}
-                        onChange={phone => setForm({ ...form, phone_number: phone })}
-                        inputClass="!w-full !p-2 !border !rounded"
+                        onChange={(phone) => setForm({ ...form, phone_number: phone })}
+                        inputClass="!w-full !px-4 !py-2 !border !border-gray-300 !rounded-md !shadow-sm focus:!outline-none focus:!ring-2 focus:!ring-green-400 transition"
+                        containerClass="w-full"
                         inputProps={{
                             name: 'phone_number',
                             required: true,
                         }}
-                        containerClass="w-full"
                     />
+
+                    {/* Role Selection */}
                     <select
                         name="role"
                         value={form.role}
                         onChange={handleChange}
-                        className="p-2 border rounded"
                         required
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 transition"
                         title="Role type"
                     >
                         <option value="User">User</option>
                         <option value="Mentor">Mentor</option>
                     </select>
+
+                    {/* Submit Button */}
                     <button
                         type="submit"
                         disabled={loading}
-                        className={`p-2 bg-blue-500 text-white rounded ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                        className={`w-full py-2 bg-green-500 text-white font-semibold rounded-md transition hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 ${loading ? 'opacity-50 cursor-not-allowed' : ''
+                            }`}
                     >
-                        {loading ? "Updating..." : "Update Profile"}
+                        {loading ? 'Updating...' : 'Update Profile'}
                     </button>
                 </form>
-                <button onClick={onClose} className="mt-4 text-red-500">Close</button>
+
+                {/* Close Button */}
+                <button
+                    onClick={onClose}
+                    className="mt-6 block mx-auto text-sm text-red-500 hover:underline focus:outline-none"
+                >
+                    Close
+                </button>
             </div>
         </div>
     );

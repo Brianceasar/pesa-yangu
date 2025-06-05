@@ -30,13 +30,13 @@ const Navbar = () => {
                 {!auth?.user ? (
                     <div className="flex gap-2">
                         <button
-                            className="px-4 py-2 rounded border border-primary text-primary bg-white hover:bg-primary hover:text-white transition"
+                            className="px-4 py-2 rounded border cursor-pointer border-primary text-primary bg-green-500 hover:bg-primary hover:text-white transition"
                             onClick={() => router.push("/login")}
                         >
                             Login
                         </button>
                         <button
-                            className="px-4 py-2 rounded border border-primary text-primary bg-white hover:bg-primary hover:text-white transition"
+                            className="px-4 py-2 rounded border cursor-pointer border-primary text-primary bg-green-500 hover:bg-primary hover:text-white transition"
                             onClick={() => router.push("/register")}
                         >
                             Register

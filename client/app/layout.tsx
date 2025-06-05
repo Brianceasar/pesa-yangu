@@ -1,8 +1,8 @@
 import { AuthProvider } from "@/context/AuthContext";
-import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import type { Metadata } from "next";
 import "../globals.css";
+import NavbarWrapper from "@/components/layout/NavbarWrapper";
 
 export const metadata: Metadata = {
   title: "Pesa Yangu",
@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
         <AuthProvider>
-          <Navbar />
+          <NavbarWrapper /> {/* Client-side conditional rendering */}
           <main className="flex-1">{children}</main>
           <Footer />
         </AuthProvider>

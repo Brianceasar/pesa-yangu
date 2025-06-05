@@ -70,15 +70,4 @@ export default factories.createCoreController('api::mentorship-session.mentorshi
             return ctx.internalServerError("Something went wrong while fetching data.");
         }
     },
-
-    // Get all sessions where logged-in user is mentor
-    async findByMentor(ctx) {
-        const user = ctx.state.user;
-        console.log('Logged in user:', ctx.state.user);
-
-
-        if (user.role_type !== 'mentor') {
-            return ctx.unauthorized("Only mentors can access their mentorship sessions.");
-        }
-    },
 }));

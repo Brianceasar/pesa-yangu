@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React from "react";
+import PricingSection from "@/components/layout/PricingSection";
 
 
 const LandingPage = () => {
@@ -49,6 +50,10 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Pricing Section */}
+      <PricingSection />
+
     </div>
   );
 };

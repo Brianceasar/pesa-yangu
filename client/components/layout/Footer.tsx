@@ -11,7 +11,7 @@ const Footer = () => {
     };
 
     return (
-        <footer className="bg-primary text-white py-8">
+        <footer className="bg-secondary text-black py-8">
             <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
                 <div>
                     <h6 className="text-lg font-bold mb-2">Pesa Yangu</h6>
@@ -35,7 +35,7 @@ const Footer = () => {
                 </div>
                 <div>
                     <h6 className="text-lg font-bold mb-2">Contact Us</h6>
-                    <form onSubmit={handleSubscribe} className="flex flex-col gap-2">
+                    <form onSubmit={handleSubscribe} className="border border-primary flex flex-col gap-2">
                         <input
                             type="email"
                             placeholder="Email"
@@ -52,9 +52,7 @@ const Footer = () => {
                         </button>
                     </form>
                 </div>
-                <div>
-                    <h6 className="text-lg font-bold mb-2">Follow Us</h6>
-                </div>
+                
             </div>
             <div className="text-center mt-8 text-sm">
                 © {new Date().getFullYear()} Pesa Yangu. All rights reserved.

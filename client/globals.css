@@ -58,8 +58,12 @@ h3 {
 p {
   font-size: 1rem; /* text-base */
   line-height: 1.5rem;
+  color: #000;
 }
-
+a {
+  color: #0e0e0e; /* text-emerald-500 */
+  text-decoration: none;
+}
 @media (min-width: 768px) {
   p {
     font-size: 1.125rem; /* md:text-lg */

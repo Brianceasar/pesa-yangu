@@ -85,7 +85,7 @@ const PricingSection = () => {
         {/* Toggle Buttons */}
         <div className="inline-flex bg-white shadow-md rounded-full mb-10 overflow-hidden">
           <button
-            className={`px-6 py-2 font-medium ${
+            className={` px-6 py-2 font-medium ${
               userType === 'student' ? 'bg-blue-600 text-white' : 'text-gray-600'
             }`}
             onClick={() => setUserType('student')}
@@ -118,7 +118,7 @@ const PricingSection = () => {
               </ul>
               <a
                 href={`/checkout?plan=${plan.tier.toLowerCase()}&role=${userType}`}
-                className="mt-auto inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
+                className="border border-primary mt-auto inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
               >
                 Get Started
               </a>

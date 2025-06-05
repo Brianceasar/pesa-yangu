@@ -1,42 +1,65 @@
-"use client";
+'use client';
 
-import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const plans = {
+  student: {
     bronze: {
-    name: 'Bronze',
-    price: 'TSh 10,000',
-    description: 'Basic mentorship access and resources',
+      name: 'Bronze',
+      price: 'TSh 10,000',
+      description: 'Basic mentorship access and resources',
+    },
+    silver: {
+      name: 'Silver',
+      price: 'TSh 25,000',
+      description: 'Premium content and 3 mentorship sessions/month',
+    },
+    gold: {
+      name: 'Gold',
+      price: 'TSh 50,000',
+      description: 'Unlimited mentorship and personalized tools',
+    },
   },
-  silver: {
-    name: 'Silver',
-    price: 'TSh 25,000',
-    description: 'More sessions and premium content',
-  },
-  gold: {
-    name: 'Gold',
-    price: 'TSh 50,000',
-    description: 'Full access and personalized guidance',
+  mentor: {
+    bronze: {
+      name: 'Bronze',
+      price: 'TSh 15,000',
+      description: 'Profile listing and basic analytics',
+    },
+    silver: {
+      name: 'Silver',
+      price: 'TSh 35,000',
+      description: 'Advanced scheduling and profile boosting',
+    },
+    gold: {
+      name: 'Gold',
+      price: 'TSh 70,000',
+      description: 'Featured mentor and unlimited boosts',
+    },
   },
 };
 
 const CheckoutPage = () => {
   const searchParams = useSearchParams();
-  const plan = searchParams.get('plan')as keyof typeof plans;
-  const selectedPlan = plans[plan] || plans.bronze;
+
+  const role = (searchParams.get('role') as 'student' | 'mentor') || 'student';
+  const plan = (searchParams.get('plan') as 'bronze' | 'silver' | 'gold') || 'bronze';
+  const selectedPlan = plans[role]?.[plan] || plans.student.bronze;
 
   const [form, setForm] = useState({ name: '', email: '', paymentMethod: 'visa' });
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setForm({
-      ...form, [e.target.name]: e.target.value });
-    };
+  useEffect(() => {
+    localStorage.setItem('selectedPlan', JSON.stringify({ role, plan }));
+  }, [role, plan]);
 
-    const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // For demo, just simulate submission
     setSubmitted(true);
   };
 
@@ -45,12 +68,16 @@ const CheckoutPage = () => {
       {submitted ? (
         <div className="text-center">
           <h2 className="text-2xl font-bold text-green-600 mb-4">Payment Successful ✅</h2>
-          <p className="text-gray-700 mb-2">Thank you for purchasing the {selectedPlan.name} Plan!</p>
-          <p className="text-sm text-gray-500">We’ve sent a confirmation email to {form.email}.</p>
+          <p className="text-gray-700 mb-2">
+            Thank you for purchasing the {selectedPlan.name} Plan ({role}).
+          </p>
+          <p className="text-sm text-gray-500">Confirmation sent to {form.email}.</p>
         </div>
       ) : (
         <>
-          <h1 className="text-3xl font-bold mb-2">Checkout - {selectedPlan.name}</h1>
+          <h1 className="text-3xl font-bold mb-2">
+            Checkout - {selectedPlan.name} ({role})
+          </h1>
           <p className="text-gray-600 mb-6">{selectedPlan.description}</p>
           <p className="text-xl font-semibold mb-6">{selectedPlan.price}</p>
 
@@ -83,30 +110,26 @@ const CheckoutPage = () => {
             >
               <option value="visa">Visa</option>
               <option value="paypal">PayPal</option>
-              <option value="mobilemoney">Mobile Money (Tigo, Mpesa, Airtel)</option>
+              <option value="mobilemoney">Mobile Money</option>
             </select>
 
-            {/* Dynamic form fields based on payment method */}
+            {/* Dynamic fields */}
             {form.paymentMethod === 'visa' && (
               <div className="space-y-2">
                 <input type="text" placeholder="Card Number" className="w-full border px-4 py-2 rounded" required />
-                <input type="text" placeholder="Expiry Date (MM/YY)" className="w-full border px-4 py-2 rounded" required />
+                <input type="text" placeholder="MM/YY" className="w-full border px-4 py-2 rounded" required />
                 <input type="text" placeholder="CVV" className="w-full border px-4 py-2 rounded" required />
               </div>
             )}
-
             {form.paymentMethod === 'paypal' && (
-              <div className="space-y-2">
-                <input type="email" placeholder="PayPal Email" className="w-full border px-4 py-2 rounded" required />
-              </div>
+              <input type="email" placeholder="PayPal Email" className="w-full border px-4 py-2 rounded" required />
             )}
-
             {form.paymentMethod === 'mobilemoney' && (
               <div className="space-y-2">
                 <input type="text" placeholder="Phone Number (07...)" className="w-full border px-4 py-2 rounded" required />
                 <select className="w-full border px-4 py-2 rounded">
                   <option value="tigo">Tigo Pesa</option>
-                  <option value="mpesa">Vodacom Mpesa</option>
+                  <option value="mpesa">Vodacom M-Pesa</option>
                   <option value="airtel">Airtel Money</option>
                 </select>
               </div>
@@ -126,4 +149,3 @@ const CheckoutPage = () => {
 };
 
 export default CheckoutPage;
-

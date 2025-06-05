@@ -41,9 +41,17 @@ export const register = async (formData: FormData) => {
     const data = await response.json();
 
     if (response.ok) {
-        return { success: true };
+        (await cookies()).set("jwt", data.jwt, { httpOnly: true });
+        (await cookies()).set("user", JSON.stringify(data.user), { httpOnly: true });
+        return { 
+            success: true,
+            jwt: data.jwt,
+            user: data.user
+         };
     } else {
-        return { success: false, error: data.message || "Registration failed" };
+        return { 
+            success: false, 
+            error: data?.message || "Registration failed" };
     }
 };
 

@@ -18,6 +18,8 @@
     "@strapi/plugin-cloud": "5.14.0",
     "@strapi/plugin-users-permissions": "5.14.0",
     "@strapi/strapi": "5.14.0",
+    "better": "^0.1.0",
+    "better-sqlite3": "^11.10.0",
     "fs-extra": "^10.0.0",
     "mime-types": "^2.1.27",
     "mysql2": "3.9.8",

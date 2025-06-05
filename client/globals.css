@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+@import "tailwindcss";
+html {
+  font-family: 'Montserrat', sans-serif;
+  background: #fff;
+  color: #111111;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #fff;
+  color: #111111;
+}
+.bg-emrald {
+  background-color: #00BFA6; /* bg-emerald-500 */
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  color: #000;
+}
+
+h1 {
+  font-size: 2.25rem; /* text-4xl */
+  line-height: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 3rem; /* md:text-5xl */
+    line-height: 1;
+  }
+}
+
+h2 {
+  font-size: 1.875rem; /* text-3xl */
+  line-height: 2.25rem;
+}
+
+@media (min-width: 768px) {
+  h2 {
+    font-size: 2.25rem; /* md:text-4xl */
+    line-height: 2.5rem;
+  }
+}
+
+h3 {
+  font-size: 1.5rem; /* text-2xl */
+  line-height: 2rem;
+}
+
+@media (min-width: 768px) {
+  h3 {
+    font-size: 1.875rem; /* md:text-3xl */
+    line-height: 2.25rem;
+  }
+}
+
+p {
+  font-size: 1rem; /* text-base */
+  line-height: 1.5rem;
+  color: #000;
+}
+a {
+  color: #0e0e0e; /* text-emerald-500 */
+  text-decoration: none;
+}
+@media (min-width: 768px) {
+  p {
+    font-size: 1.125rem; /* md:text-lg */
+    line-height: 1.75rem;
+  }
+}

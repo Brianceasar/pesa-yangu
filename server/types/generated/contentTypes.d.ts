@@ -428,7 +428,7 @@ export interface ApiMentorshipSessionMentorshipSession
       'manyToOne',
       'plugin::users-permissions.user'
     >;
-    description: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    description: Schema.Attribute.String & Schema.Attribute.Required;
     duration: Schema.Attribute.Integer;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -949,6 +949,10 @@ export interface PluginUsersPermissionsUser
   attributes: {
     bio: Schema.Attribute.Text;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    booked_sessions: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::mentorship-session.mentorship-session'
+    >;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
@@ -970,11 +974,7 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
-    mentoring_sessions: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::mentorship-session.mentorship-session'
-    >;
-    mentorship_sessions: Schema.Attribute.Relation<
+    mentored_sessions: Schema.Attribute.Relation<
       'oneToMany',
       'api::mentorship-session.mentorship-session'
     >;

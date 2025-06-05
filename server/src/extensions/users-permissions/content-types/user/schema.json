@@ -93,7 +93,7 @@
     "bio": {
       "type": "text"
     },
-    "mentorship_sessions": {
+    "booked_sessions": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::mentorship-session.mentorship-session",
@@ -111,7 +111,7 @@
       "target": "api::rating.rating",
       "mappedBy": "rated_by"
     },
-    "mentoring_sessions": {
+    "mentored_sessions": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::mentorship-session.mentorship-session",

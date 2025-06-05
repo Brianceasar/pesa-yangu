@@ -4,32 +4,81 @@
 
 // src/api/mentorship-session/controllers/mentorship-session.ts
 
+
 import { factories } from '@strapi/strapi';
 
 export default factories.createCoreController('api::mentorship-session.mentorship-session', ({ strapi }) => ({
+
+    // CREATE - Customer books a session with a mentor
+    async create(ctx) {
+        const user = ctx.state.user;
+
+        if (!user || user.role_type !== 'customer') {
+            return ctx.unauthorized("Only customers can create mentorship sessions.");
+        }
+
+        const { title, description, session_status, preferred_date, duration, mentor } = ctx.request.body.data;
+
+        if (!mentor) {
+            return ctx.badRequest("Mentor ID must be provided.");
+        }
+
+        const createdSession = await strapi.entityService.create('api::mentorship-session.mentorship-session', {
+            data: {
+                title,
+                description,
+                session_status,
+                preferred_date,
+                duration,
+                customer: user.id,
+                mentor,
+            },
+            populate: ['mentor', 'customer'],
+        });
+
+        return { data: createdSession };
+    },
+
+    // FIND - Get customer's sessions
     async find(ctx) {
         const user = ctx.state.user;
 
-        if (!user) {
-            return ctx.unauthorized("You must be logged in");
+        if (!user || user.role_type !== 'customer') {
+            return ctx.unauthorized("Only customers can access their sessions.");
         }
 
-        const roleType = user.role_type;
+        try {
+            // 1. Fetch sessions booked by the current customer
+            const sessions = await strapi.entityService.findMany('api::mentorship-session.mentorship-session', {
+                filters: {
+                    customer: user.id,
+                },
+                populate: {
+                    mentor: {
+                        fields: ['id', 'full_name', 'email', 'bio'],
+                    },
+                    customer: {
+                        fields: ['id', 'full_name', 'email'],
+                    },
+                },
+            });
 
-        const filters: any = {};
+            return ctx.send({ sessions });
 
-        if (roleType === 'customer') {
-            filters.customer = user.id;
-        } else if (roleType === 'mentor') {
-            filters.mentor = user.id;
+        } catch (error) {
+            strapi.log.error("Error fetching sessions/resources:", error);
+            return ctx.internalServerError("Something went wrong while fetching data.");
         }
+    },
 
-        ctx.query = {
-            ...ctx.query,
-            filters,
-        };
+    // Get all sessions where logged-in user is mentor
+    async findByMentor(ctx) {
+        const user = ctx.state.user;
+        console.log('Logged in user:', ctx.state.user);
 
-        const { data, meta } = await super.find(ctx);
-        return { data, meta };
+
+        if (user.role_type !== 'mentor') {
+            return ctx.unauthorized("Only mentors can access their mentorship sessions.");
+        }
     },
 }));

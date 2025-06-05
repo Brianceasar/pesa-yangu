@@ -1,35 +1,60 @@
 "use client";
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
+import React from "react";
+import PricingSection from "@/components/layout/PricingSection";
+
 
 const LandingPage = () => {
   const router = useRouter();
 
   return (
-    <Box>
-      <Box sx={{ bgcolor: "primary.main", color: "white", py: 12 }}>
-        <Container maxWidth="lg">
-          <Typography variant="h2" fontWeight={700}>Your Journey to Financial Freedom</Typography>
-          <Typography variant="h6" sx={{ mt: 2 }}>Mentorship and Resources to Help You Thrive</Typography>
-          <Button variant="contained" color="secondary" size="large" sx={{ mt: 4 }} onClick={() => router.push("/register")}>
+    <div className="font-montserrat bg-white min-h-screen">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-primary via-primary-light to-lightblue text-black py-20">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <h1 className="text-4xl md:text-6xl font-extrabold drop-shadow-lg">
+            Your Journey to{" "}
+            <span className="text-secondary">Financial Freedom</span>
+          </h1>
+          <p className="text-lg md:text-2xl mt-6 font-medium text-black/90">
+            Mentorship and Resources to Help You Thrive
+          </p>
+          <button
+            className="mt-10 px-10 cursor-pointer py-4 bg-secondary bg-green-500 rounded-lg text-lg font-semibold shadow-lg transition-all duration-200"
+            onClick={() => router.push("/register")}
+          >
             Get Started
-          </Button>
-        </Container>
-      </Box>
+          </button>
+        </div>
+      </section>
 
-      <Container maxWidth="lg" sx={{ py: 10 }}>
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h4" fontWeight={600}>Learn from Trusted Mentors</Typography>
-            <Typography sx={{ mt: 2 }}>Book sessions with experienced professionals and mentors ready to guide you.</Typography>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h4" fontWeight={600}>Access Valuable Resources</Typography>
-            <Typography sx={{ mt: 2 }}>Browse our curated library of financial education materials.</Typography>
-          </Grid>
-        </Grid>
-      </Container>
-    </Box>
+      {/* Features Section */}
+      <section className="max-w-6xl mx-auto py-16 px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="bg-white rounded-xl shadow-lg p-8 border border-lightblue">
+            <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4">
+              Learn from Trusted Mentors
+            </h2>
+            <p className="text-gray-700 text-base md:text-lg">
+              Book sessions with experienced professionals and mentors ready to
+              guide you.
+            </p>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-8 border border-lightblue">
+            <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4">
+              Access Valuable Resources
+            </h2>
+            <p className="text-gray-700 text-base md:text-lg">
+              Browse our curated library of financial education materials.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <PricingSection />
+
+    </div>
   );
 };
 

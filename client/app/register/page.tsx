@@ -1,11 +1,10 @@
 "use client";
-import { Container } from "@mui/material";
 import RegisterForm from "@/components/auth/RegisterForm";
 
 const RegisterPage = () => (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
+    <div className="max-w-md mx-auto mt-10 px-4">
         <RegisterForm />
-    </Container>
+    </div>
 );
 
 export default RegisterPage;

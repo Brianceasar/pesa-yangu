@@ -58,9 +58,9 @@ server/node_modules/
 /coverage
 
 # next.js
-/.next/
+client/.next/
+server/.next/
 /out/
-
 
 # misc
 .DS_Store

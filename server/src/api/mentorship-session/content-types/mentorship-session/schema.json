@@ -15,10 +15,6 @@
       "type": "text",
       "required": true
     },
-    "description": {
-      "type": "blocks",
-      "required": true
-    },
     "session_status": {
       "type": "enumeration",
       "enum": [
@@ -38,7 +34,7 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "mentorship_sessions"
+      "inversedBy": "booked_sessions"
     },
     "rating": {
       "type": "relation",
@@ -50,7 +46,11 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "mentoring_sessions"
+      "inversedBy": "mentored_sessions"
+    },
+    "description": {
+      "type": "string",
+      "required": true
     }
   }
 }

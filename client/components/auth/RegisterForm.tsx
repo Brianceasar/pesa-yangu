@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { register } from "../../app/actions/auth";
-import UpdateProfileModal from "@/components/profile/UpdateProfileModal";
+import AlreadyVerifiedModal from "@/components/profile/AlreadyVerifiedModal";
 
 const RegisterForm = () => {
     const [form, setForm] = useState({ username: "", email: "", password: "" });
@@ -11,7 +11,6 @@ const RegisterForm = () => {
     const [success, setSuccess] = useState(false);
     const [message, setMessage] = useState("");
     const [showModal, setShowModal] = useState(false);
-    const [userData, setUserData] = useState<{ id: string; jwt: string } | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -31,7 +30,6 @@ const RegisterForm = () => {
             setMessage("Registred successful! Waiting For Admin Approval");
             localStorage.setItem("jwt", result.jwt);
             localStorage.setItem("user", JSON.stringify(result.user));
-            setUserData({ id: result.user.id, jwt: result.jwt });
             setShowModal(true);
             setForm({ username: "", email: "", password: "" });
             setError(null);
@@ -135,12 +133,10 @@ const RegisterForm = () => {
                 </p>
             </form>
 
-            {showModal && userData && (
-                <UpdateProfileModal
+            {showModal && (
+                <AlreadyVerifiedModal
                     open={showModal}
                     onClose={() => setShowModal(false)}
-                    userId={userData.id}
-                    jwt={userData.jwt}
                 />
             )}
         </>

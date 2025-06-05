@@ -11,7 +11,9 @@ body {
   background-color: #fff;
   color: #111111;
 }
-
+.bg-emrald {
+  background-color: #00BFA6; /* bg-emerald-500 */
+}
 h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   color: #000;

@@ -14,7 +14,7 @@ const Footer = () => {
     };
 
     return (
-        <footer className="bg-primary py-8">
+        <footer className="py-8">
             <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
                 <div>
                     <h6 className="text-lg font-bold mb-2">Pesa Yangu</h6>
@@ -38,18 +38,18 @@ const Footer = () => {
                 </div>
                 <div>
                     <h6 className="text-lg font-bold mb-2">Contact Us</h6>
-                    <form onSubmit={handleSubscribe} className="border border-primary flex flex-col gap-2">
+                    <form onSubmit={handleSubscribe} className="flex flex-col gap-2">
                         <input
                             type="email"
                             placeholder="Email"
                             value={email}
                             onChange={e => setEmail(e.target.value)}
-                            className="rounded px-3 py-2 text-gray-900 focus:outline-none border-2"
+                            className="rounded px-3 py-2 text-gray-900 border-2"
                             required
                         />
                         <button
                             type="submit"
-                            className="bg-secondary hover:bg-secondary-dark text-white rounded px-4 py-2 font-semibold transition"
+                            className="bg-green-500 hover:bg-secondary-dark cursor-pointer text-white rounded-lg px-4 py-2 font-semibold transition"
                         >
                             Subscribe
                         </button>

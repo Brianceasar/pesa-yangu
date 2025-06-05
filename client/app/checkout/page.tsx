@@ -75,7 +75,7 @@ const CheckoutPage = () => {
         </div>
       ) : (
         <>
-          <h1 className="text-3xl font-bold mb-2">
+          <h1 className="text-lg font-bold mb-2">
             Checkout - {selectedPlan.name} ({role})
           </h1>
           <p className="text-gray-600 mb-6">{selectedPlan.description}</p>

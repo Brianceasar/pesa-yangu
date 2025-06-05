@@ -28,7 +28,7 @@ const RegisterForm = () => {
 
         if (result.success && result.user && result.jwt) {
             setSuccess(true);
-            setMessage("Registration successful! Redirecting to complete Profile...");
+            setMessage("Registred successful! Waiting For Admin Approval");
             localStorage.setItem("jwt", result.jwt);
             localStorage.setItem("user", JSON.stringify(result.user));
             setUserData({ id: result.user.id, jwt: result.jwt });

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 
 const pricingData = {
-  student: [
+  customer: [
     {
       tier: 'Bronze',
       price: 'TSh 10,000',
@@ -69,12 +69,12 @@ const pricingData = {
 };
 
 const PricingSection = () => {
-  const [userType, setUserType] = useState<'student' | 'mentor'>('student');
+  const [userType, setUserType] = useState<'customer' | 'mentor'>('customer');
 
   useEffect(() => {
     const hash = window.location.hash;
     if (hash === '#mentor') setUserType('mentor');
-    else if (hash === '#student') setUserType('student');
+    else if (hash === '#customer') setUserType('customer');
   }, []);
 
   return (
@@ -85,11 +85,11 @@ const PricingSection = () => {
         {/* Toggle Buttons */}
         <div className="inline-flex bg-white shadow-md rounded-full mb-10 overflow-hidden">
           <button
-            className={`px-6 py-2 font-medium ${userType === 'student' ? 'bg-green-500 text-white' : 'text-gray-600'
+            className={`px-6 py-2 font-medium ${userType === 'customer' ? 'bg-green-500 text-white' : 'text-gray-600'
               }`}
-            onClick={() => setUserType('student')}
+            onClick={() => setUserType('customer')}
           >
-            For Students
+            For Customers
           </button>
           <button
             className={`px-6 py-2 font-medium ${userType === 'mentor' ? 'bg-green-500 text-white' : 'text-gray-600'

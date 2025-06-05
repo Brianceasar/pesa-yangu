@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 const pricingData = {
   student: [
@@ -69,6 +70,12 @@ const pricingData = {
 
 const PricingSection = () => {
   const [userType, setUserType] = useState<'student' | 'mentor'>('student');
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash === '#mentor') setUserType('mentor');
+    else if (hash === '#student') setUserType('student');
+  }, []);
 
   return (
     <section className="bg-gray-50 py-16 px-4" id="pricing">

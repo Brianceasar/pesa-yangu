@@ -1,14 +1,15 @@
 "use client";
+
 import { useState } from "react";
-import { login } from "../../app/actions/auth";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { getSession } from "next-auth/react";
+
 
 const LoginForm = () => {
     const [form, setForm] = useState({ identifier: "", password: "" });
-    const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
-    const [success, setSuccess] = useState(false);
-    const [message, setMessage] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
 
@@ -19,42 +20,50 @@ const LoginForm = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
-        setError(null);
-        const formData = new FormData(e.currentTarget);
-        const result = await login(formData);
 
-        if (result.success) {
-            setSuccess(true);
-            setMessage("Login successful! Redirecting...");
+        // Call next-auth credentials signIn
+        const result = await signIn("credentials", {
+            redirect: false,
+            email: form.identifier, // assuming your provider expects email
+            password: form.password,
+        });
 
-            let targetPath = "/";
 
-            switch (result.role) {
-                case "admin":
-                    targetPath = "/dashboard/admin";
-                    break;
-                case "mentor":
-                    targetPath = "/dashboard/mentor";
-                    break;
-                case "customer":
-                    targetPath = "/dashboard/customer";
-                    break;
-                default:
-                    targetPath = "/";
-            }
-
-            setTimeout(() => {
-                router.push(targetPath);
-            }, 2000);
-
-            setForm({ identifier: "", password: "" });
-            setError(null);
+        if (result?.error) {
+            toast.error("Login failed: " + result.error);
         } else {
-            setError(result.error);
-        }
+            toast.success("Login successful!");
 
+            // Fetch session to access user info (e.g., role_type)
+            const session = await getSession();
+
+            const role = session?.user?.role;
+
+            if (role === "mentor") {
+                router.push("/dashboard/mentor");
+            } else if (role === "customer") {
+                router.push("/dashboard/customer");
+            } else {
+                router.push("/login");
+            }
+        }
         setLoading(false);
     };
+
+    // SVGs as React components (recommended)
+    const EyeIcon = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5s8.268 2.943 9.542 7c-1.274 4.057-5.065 7-9.542 7s-8.268-2.943-9.542-7z" />
+        </svg>
+    );
+
+    const EyeOffIcon = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10 0-1.657.336-3.236.938-4.675M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3l18 18" />
+        </svg>
+    );
 
     return (
         <form
@@ -62,17 +71,6 @@ const LoginForm = () => {
             className="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-10 flex flex-col gap-5 max-w-md mx-auto mt-12"
         >
             <h2 className="text-3xl font-bold text-center text-gray-800">Login</h2>
-
-            {error && (
-                <div className="bg-red-100 text-red-700 px-4 py-3 rounded text-sm border border-red-300">
-                    {error}
-                </div>
-            )}
-            {success && (
-                <div className="bg-green-100 text-green-700 px-4 py-3 rounded text-sm border border-green-300">
-                    {message}
-                </div>
-            )}
 
             {/* Identifier */}
             <div>
@@ -109,48 +107,22 @@ const LoginForm = () => {
                         value={form.password}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm pr-10 focus:ring-2 focus:ring-green-400 focus:outline-none transition"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm pr-12 focus:ring-2 focus:ring-green-400 focus:outline-none transition"
                     />
                     <button
                         type="button"
-                        tabIndex={-1}
                         onClick={() => setShowPassword((show) => !show)}
                         aria-label={showPassword ? "Hide password" : "Show password"}
-                        className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-gray-700 transition"
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-700"
                     >
                         {showPassword ? (
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10 0-1.657.336-3.236.938-4.675M15 12a3 3 0 11-6 0 3 3 0 016 0zm6.062-4.675A9.956 9.956 0 0122 9c0 5.523-4.477 10-10 10a9.956 9.956 0 01-4.675-.938"
-                                />
-                            </svg>
+                            <EyeOffIcon />
                         ) : (
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm2.21-2.21A9.956 9.956 0 0122 12c0 5.523-4.477 10-10 10S2 17.523 2 12c0-2.21.714-4.253 1.927-5.927"
-                                />
-                            </svg>
+                            <EyeIcon />
                         )}
                     </button>
                 </div>
+
             </div>
 
             {/* Submit Button */}

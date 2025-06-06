@@ -4,7 +4,7 @@
   "info": {
     "singularName": "order",
     "pluralName": "orders",
-    "displayName": "order"
+    "displayName": "Order"
   },
   "options": {
     "draftAndPublish": true
@@ -18,18 +18,27 @@
       "type": "email",
       "required": true
     },
-    "items": {
-      "type": "json"
-    },
-    "totalamount": {
-      "type": "integer"
-    },
     "order_status": {
       "type": "enumeration",
       "enum": [
         "pending",
         "paid",
         "cancelled"
+      ]
+    },
+    "plans": {
+      "type": "enumeration",
+      "enum": [
+        "bronze",
+        "silver",
+        "gold"
+      ]
+    },
+    "payment_method": {
+      "type": "enumeration",
+      "enum": [
+        "mobile money",
+        "bank transfer"
       ]
     }
   }

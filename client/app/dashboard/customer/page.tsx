@@ -1,127 +1,69 @@
 "use client";
 
-import { useState } from "react";
-import { useSession } from "next-auth/react";
-import axios from "axios";
-import toast from "react-hot-toast";
+import PricingSection from "@/components/layout/PricingSection";
 
-interface MentorOption {
+type DataItem = {
   id: string;
-  name: string;
-}
+  title: string;
+  url: string;
+};
 
-const mentorOptions: MentorOption[] = [
-  { id: "mentor1", name: "John Doe" },
-  { id: "mentor2", name: "Jane Smith" },
-  { id: "mentor3", name: "David Kim" },
+const dummyData: DataItem[] = [
+  {
+    id: '3',
+    title: 'Financial Literacy',
+    url: 'https://youtu.be/4XZIv4__sQA?feature=shared',
+  },
+  {
+    id: '4',
+    title: 'Investing 101',
+    url: 'https://youtu.be/WEDIj9JBTC8',
+  },
+
 ];
 
+
 export default function BookSessionPage() {
-  const { data: session } = useSession();
-  const [mentorId, setMentorId] = useState("");
-  const [category, setCategory] = useState("");
-  const [date, setDate] = useState("");
-  const [timeSlot, setTimeSlot] = useState("");
-  const [message, setMessage] = useState("");
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!session || !session.user?.accessToken) {
-      toast.error("You must be logged in to book a session.");
-      return;
-    }
-
-    try {
-      const res = await axios.post(
-        "/api/mentorship-sessions",
-        {
-          mentorId,
-          category,
-          date,
-          timeSlot,
-          message,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${session.user.accessToken}`,
-          },
-        }
-      );
-
-      if (res.status === 200) {
-        toast.success("✅ Session booked successfully!");
-        setMentorId("");
-        setCategory("");
-        setDate("");
-        setTimeSlot("");
-        setMessage("");
-      }
-    } catch (err) {
-      toast.error("❌ Failed to book session. Please try again.");
-      console.error(err);
-    }
+  const getYouTubeEmbedUrl = (url: string): string => {
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^?&]+)/);
+    return match ? `https://www.youtube.com/embed/${match[1]}` : url;
   };
 
+
   return (
-    <div className="max-w-2xl mx-auto p-4 mt-8 font-montserrat">
-      <h1 className="text-2xl font-bold mb-6">Book a Mentorship Session</h1>
+    <div className="font-montserrat bg-white min-h-screen">
+      <section className="bg-gradient-to-r from-primary via-primary-light to-lightblue text-white py-20">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <h1 className="text-4xl md:text-6xl font-extrabold drop-shadow-lg">
+            Welcome to Your Customer Dashboard
+          </h1>
+          <p className="text-lg md:text-2xl mt-6 font-medium text-white/90">
+            Manage your mentorship sessions and connect with students
+          </p>
+        </div>
+      </section>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <select
-          value={mentorId}
-          onChange={(e) => setMentorId(e.target.value)}
-          required
-          className="w-full p-2 border rounded"
-        >
-          <option value="">Select Mentor</option>
-          {mentorOptions.map((mentor) => (
-            <option key={mentor.id} value={mentor.id}>
-              {mentor.name}
-            </option>
+      <section className="max-w-4xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {dummyData.map((item) => (
+            <div key={item.id}>
+              <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+              <div className="relative pb-[56.25%] h-0 overflow-hidden">
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full"
+                  src={getYouTubeEmbedUrl(item.url)}
+                  title={item.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </div>
           ))}
-        </select>
+        </div>
+      </section>
 
-        <input
-          type="text"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          placeholder="Enter topic (e.g., Budgeting)"
-          required
-          className="w-full p-2 border rounded"
-        />
-
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-          className="w-full p-2 border rounded"
-        />
-
-        <input
-          type="text"
-          value={timeSlot}
-          onChange={(e) => setTimeSlot(e.target.value)}
-          placeholder="Enter time slot (e.g., 10:00 AM - 11:00 AM)"
-          required
-          className="w-full p-2 border rounded"
-        />
-
-        <textarea
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Optional message or question..."
-          className="w-full p-2 border rounded"
-        />
-
-        <button
-          type="submit"
-          className="bg-primary text-white py-2 px-4 rounded"
-        >
-          Book Session
-        </button>
-      </form>
+      <PricingSection />
     </div>
   );
 }

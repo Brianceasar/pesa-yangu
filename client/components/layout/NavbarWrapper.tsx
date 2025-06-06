@@ -1,11 +1,15 @@
 "use client";
 
-import { useContext } from "react";
-import { AuthContext } from "@/context/AuthContext";
+import { useSession } from "next-auth/react";
 import Navbar from "./Navbar";
 
 export default function NavbarWrapper() {
-    const auth = useContext(AuthContext);
-    console.log("NavbarWrapper - current user:", auth?.user);
-    return !auth?.user ? <Navbar /> : null;
+    const { data: session, status } = useSession();
+
+    // Show Navbar only if no user is logged in (session is null)
+    if (status === "loading") {
+        return null; // or a loader if you want
+    }
+
+    return !session?.user ? <Navbar /> : null;
 }

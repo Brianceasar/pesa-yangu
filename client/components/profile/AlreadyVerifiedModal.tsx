@@ -13,7 +13,7 @@ const AlreadyVerifiedModal = ({ open, onClose }: Props) => {
     if (!open) return null;
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-50 z-50">
             <div className="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full relative">
                 <h2 className="text-xl font-semibold text-center text-gray-800 mb-4">
                     Already Verified?

@@ -1,22 +1,26 @@
 "use client";
 
-import { useContext, useState } from "react";
-import { AuthContext } from "@/context/AuthContext";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
-    const auth = useContext(AuthContext);
     const router = useRouter();
+    const { data: session, status } = useSession();
     const [menuOpen, setMenuOpen] = useState(false);
 
     const handleMenuToggle = () => setMenuOpen((open) => !open);
     const handleMenuClose = () => setMenuOpen(false);
 
-    const handleLogout = () => {
-        auth?.logout();
+    const handleLogout = async () => {
         handleMenuClose();
-        router.push("/");
+        await signOut({ redirect: false });
+        router.push("/login");
     };
+
+    if (status === "loading") {
+        return null; // or a loading spinner
+    }
 
     return (
         <nav className="sticky top-0 bg-white text-primary shadow z-50">
@@ -27,7 +31,8 @@ const Navbar = () => {
                 >
                     Pesa Yangu
                 </div>
-                {!auth?.user ? (
+
+                {!session?.user ? (
                     <div className="flex gap-2">
                         <button
                             className="px-4 py-2 rounded border cursor-pointer border-primary text-primary bg-green-500 hover:bg-primary hover:text-white transition"
@@ -44,14 +49,15 @@ const Navbar = () => {
                     </div>
                 ) : (
                     <div className="relative flex items-center gap-2">
-                        <span className="font-medium text-primary">{auth.user.username}</span>
+                        <span className="font-medium text-primary">{session.user.name || session.user.email}</span>
                         <button
                             className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white focus:outline-none"
                             onClick={handleMenuToggle}
                             aria-label="User menu"
                         >
-                            {auth.user.username?.[0]?.toUpperCase() || "U"}
+                            {(session.user.name?.[0] || session.user.email?.[0] || "U").toUpperCase()}
                         </button>
+
                         {menuOpen && (
                             <div className="absolute right-0 mt-2 w-40 bg-white text-primary rounded shadow-lg py-2 z-50 border border-primary">
                                 <button

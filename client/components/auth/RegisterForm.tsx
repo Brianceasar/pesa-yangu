@@ -1,15 +1,13 @@
 'use client';
 
 import { useState } from "react";
-import { register } from "../../app/actions/auth";
+import { register } from "../../app/actions/register";
 import AlreadyVerifiedModal from "@/components/profile/AlreadyVerifiedModal";
+import toast from "react-hot-toast";
 
 const RegisterForm = () => {
     const [form, setForm] = useState({ username: "", email: "", password: "" });
-    const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
-    const [success, setSuccess] = useState(false);
-    const [message, setMessage] = useState("");
     const [showModal, setShowModal] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,23 +17,23 @@ const RegisterForm = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
-        setError(null);
-        setSuccess(false);
 
-        const formData = new FormData(e.currentTarget);
+        const formData = new FormData();
+        formData.append("username", form.username);
+        formData.append("email", form.email);
+        formData.append("password", form.password);
+
         const result = await register(formData);
 
-        if (result.success && result.user && result.jwt) {
-            setSuccess(true);
-            setMessage("Registred successful! Waiting For Admin Approval");
-            localStorage.setItem("jwt", result.jwt);
-            localStorage.setItem("user", JSON.stringify(result.user));
+        if (result.success && result.user) {
+            toast.success("Registered successfully! Waiting for admin approval.");
+
             setShowModal(true);
             setForm({ username: "", email: "", password: "" });
-            setError(null);
         } else {
-            setError(result.error);
+            toast.error(result.error || "Registration failed");
         }
+
         setLoading(false);
     };
 
@@ -46,18 +44,6 @@ const RegisterForm = () => {
                 className="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-8 flex flex-col gap-5 max-w-md mx-auto mt-12"
             >
                 <h2 className="text-3xl font-bold text-center text-gray-800">Register</h2>
-
-                {error && (
-                    <div className="bg-red-100 text-red-700 px-4 py-3 rounded text-sm border border-red-300">
-                        {error}
-                    </div>
-                )}
-                {success && (
-                    <div className="bg-green-100 text-green-700 px-4 py-3 rounded text-sm border border-green-300">
-                        {message}
-                    </div>
-                )}
-
                 {/* Username */}
                 <div>
                     <label

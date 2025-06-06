@@ -1,19 +1,23 @@
 "use client";
 
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { AuthContext } from "@/context/AuthContext";
+import { useSession } from "next-auth/react";
 
-export default function DashboardRedirect () {
-    const auth = useContext(AuthContext);
+export default function DashboardRedirect() {
+    const { data: session, status } = useSession();
     const router = useRouter();
+
     useEffect(() => {
-        if (!auth?.user) {
+        if (status === "loading") return; // Wait for session to load
+
+        if (!session?.user) {
             router.push("/login");
         } else {
-            const role = auth.user.role?.name?.toLowerCase();
+            const role = session.user.role?.toLowerCase() || "";
             router.push(`/dashboard/${role}`);
         }
-    }, [auth?.user, router]);
+    }, [session, status, router]);
+
     return null;
 }

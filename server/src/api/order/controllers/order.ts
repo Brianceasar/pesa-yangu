@@ -6,15 +6,15 @@ import { factories } from '@strapi/strapi';
 
 export default factories.createCoreController('api::order.order', ({ strapi }) => ({
     async create(ctx) {
-        const { fullname, email, items, totalamount } = ctx.request.body;
+        const { fullname, email, plans, payment_method } = ctx.request.body;
 
         // 1. Create the order
         const response = await strapi.entityService.create('api::order.order', {
             data: {
                 fullname,
                 email,
-                items,
-                totalamount,
+                plans,
+                payment_method,
                 order_status: 'pending',
             },
         });
@@ -30,13 +30,12 @@ export default factories.createCoreController('api::order.order', ({ strapi }) =
           
           <hr style="margin: 20px 0;" />
 
-          <h3>📦 Order Items:</h3>
-          <ul>
-            ${items.map((item: string) => `<li>${item}</li>`).join('')}
-          </ul>
 
-          <p><strong>Total Amount:</strong> <span style="color: #4CAF50;">$${totalamount}</span></p>
+          <p><strong>Payment Method:</strong> <span style="color: #4CAF50;">${payment_method}</span></p>
           <p><strong>Status:</strong> Pending</p>
+
+           <p><strong>Subsribed Plan:</strong> <span style="color: #4CAF50;">${plans}</span></p>
+          
 
           <hr style="margin: 20px 0;" />
 

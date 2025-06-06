@@ -456,7 +456,7 @@ export interface ApiMentorshipSessionMentorshipSession
 export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
   collectionName: 'orders';
   info: {
-    displayName: 'order';
+    displayName: 'Order';
     pluralName: 'orders';
     singularName: 'order';
   };
@@ -469,15 +469,17 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     email: Schema.Attribute.Email & Schema.Attribute.Required;
     fullname: Schema.Attribute.String;
-    items: Schema.Attribute.JSON;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::order.order'> &
       Schema.Attribute.Private;
     order_status: Schema.Attribute.Enumeration<
       ['pending', 'paid', 'cancelled']
     >;
+    payment_method: Schema.Attribute.Enumeration<
+      ['mobile money', 'bank transfer']
+    >;
+    plans: Schema.Attribute.Enumeration<['bronze', 'silver', 'gold']>;
     publishedAt: Schema.Attribute.DateTime;
-    totalamount: Schema.Attribute.Integer;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

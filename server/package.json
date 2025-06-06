@@ -2,7 +2,7 @@
   "name": "server",
   "version": "0.1.0",
   "private": true,
-  "description": "A Strapi application",
+  "description": "Pesa Yangu application",
   "scripts": {
     "build": "strapi build",
     "console": "strapi console",
@@ -17,6 +17,7 @@
   "dependencies": {
     "@strapi/plugin-cloud": "5.14.0",
     "@strapi/plugin-users-permissions": "5.14.0",
+    "@strapi/provider-email-nodemailer": "^5.15.0",
     "@strapi/strapi": "5.14.0",
     "better": "^0.1.0",
     "better-sqlite3": "^11.10.0",
